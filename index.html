@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>90-Day CS Study Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0b0c10;
+    --surface: #13141a;
+    --surface2: #1c1e27;
+    --border: #2a2d3a;
+    --accent-se: #00e5ff;
+    --accent-ai: #a78bfa;
+    --accent-bd: #f59e0b;
+    --accent-bc: #34d399;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --glow-se: 0 0 20px rgba(0,229,255,0.15);
+    --glow-ai: 0 0 20px rgba(167,139,250,0.15);
+    --glow-bd: 0 0 20px rgba(245,158,11,0.15);
+    --glow-bc: 0 0 20px rgba(52,211,153,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* BG Grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    margin-bottom: 56px;
+    animation: fadeDown 0.6s ease both;
+  }
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--accent-se);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.8;
+  }
+
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 0%, #a0aec0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+
+  header p {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .stat-card:hover { transform: translateY(-2px); }
+  .stat-card.se { border-color: rgba(0,229,255,0.3); box-shadow: var(--glow-se); }
+  .stat-card.ai { border-color: rgba(167,139,250,0.3); box-shadow: var(--glow-ai); }
+  .stat-card.bd { border-color: rgba(245,158,11,0.3); box-shadow: var(--glow-bd); }
+  .stat-card.bc { border-color: rgba(52,211,153,0.3); box-shadow: var(--glow-bc); }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .stat-card.se .stat-num { color: var(--accent-se); }
+  .stat-card.ai .stat-num { color: var(--accent-ai); }
+  .stat-card.bd .stat-num { color: var(--accent-bd); }
+  .stat-card.bc .stat-num { color: var(--accent-bc); }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .tab {
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .tab:hover { color: var(--text); border-color: #444; }
+
+  .tab.active-se { background: rgba(0,229,255,0.1); border-color: var(--accent-se); color: var(--accent-se); }
+  .tab.active-ai { background: rgba(167,139,250,0.1); border-color: var(--accent-ai); color: var(--accent-ai); }
+  .tab.active-bd { background: rgba(245,158,11,0.1); border-color: var(--accent-bd); color: var(--accent-bd); }
+  .tab.active-bc { background: rgba(52,211,153,0.1); border-color: var(--accent-bc); color: var(--accent-bc); }
+  .tab.active-all { background: rgba(255,255,255,0.08); border-color: #fff; color: #fff; }
+
+  /* MONTH SECTION */
+  .month-section {
+    margin-bottom: 40px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .month-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .month-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .month-badge {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 1px solid;
+  }
+
+  .month-badge.m1 { color: #60a5fa; border-color: #60a5fa; background: rgba(96,165,250,0.1); }
+  .month-badge.m2 { color: #f472b6; border-color: #f472b6; background: rgba(244,114,182,0.1); }
+  .month-badge.m3 { color: #fb923c; border-color: #fb923c; background: rgba(251,146,60,0.1); }
+
+  /* WEEK GRID */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  /* WEEK CARD */
+  .week-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .week-card:hover { transform: translateY(-3px); }
+  .week-card.se:hover { box-shadow: var(--glow-se); border-color: rgba(0,229,255,0.4); }
+  .week-card.ai:hover { box-shadow: var(--glow-ai); border-color: rgba(167,139,250,0.4); }
+  .week-card.bd:hover { box-shadow: var(--glow-bd); border-color: rgba(245,158,11,0.4); }
+  .week-card.bc:hover { box-shadow: var(--glow-bc); border-color: rgba(52,211,153,0.4); }
+
+  .week-card-top {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .week-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .week-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+  }
+
+  .week-tag {
+    font-size: 9px;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-left: 10px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .tag-se { background: rgba(0,229,255,0.12); color: var(--accent-se); border: 1px solid rgba(0,229,255,0.3); }
+  .tag-ai { background: rgba(167,139,250,0.12); color: var(--accent-ai); border: 1px solid rgba(167,139,250,0.3); }
+  .tag-bd { background: rgba(245,158,11,0.12); color: var(--accent-bd); border: 1px solid rgba(245,158,11,0.3); }
+  .tag-bc { background: rgba(52,211,153,0.12); color: var(--accent-bc); border: 1px solid rgba(52,211,153,0.3); }
+
+  /* TASKS */
+  .task-list {
+    padding: 14px 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    group: task;
+  }
+
+  .task-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1.5px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .task-item:hover .task-check { border-color: #888; }
+  .task-check.done { background: #22c55e; border-color: #22c55e; }
+  .task-check.done::after { content: '✓'; font-size: 11px; color: #000; font-weight: 700; }
+
+  .task-text {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #c4c9d4;
+    transition: color 0.2s;
+    flex: 1;
+  }
+
+  .task-item.done .task-text {
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+
+  /* DAILY RHYTHM */
+  .daily-section {
+    margin-bottom: 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    border-radius: 2px;
+    background: var(--accent-se);
+    flex-shrink: 0;
+  }
+
+  .rhythm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+
+  .rhythm-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+
+  .rhythm-time {
+    font-size: 10px;
+    color: var(--accent-se);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .rhythm-label {
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .rhythm-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* PROGRESS */
+  .progress-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+
+  .progress-bars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .prog-item { display: flex; flex-direction: column; gap: 8px; }
+  .prog-header { display: flex; justify-content: space-between; font-size: 12px; }
+  .prog-name { color: var(--text); }
+  .prog-pct { color: var(--muted); font-size: 11px; }
+
+  .prog-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .prog-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .prog-fill.se { background: linear-gradient(90deg, var(--accent-se), #0099aa); }
+  .prog-fill.ai { background: linear-gradient(90deg, var(--accent-ai), #7c3aed); }
+  .prog-fill.bd { background: linear-gradient(90deg, var(--accent-bd), #d97706); }
+  .prog-fill.bc { background: linear-gradient(90deg, var(--accent-bc), #059669); }
+
+  /* HIDDEN */
+  .hidden { display: none !important; }
+
+  /* ANIMATIONS */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .progress-bars { grid-template-columns: 1fr; }
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 40px 0;
+  }
+
+  .tools-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .tool-chip {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 50px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-label">// March 1 → May 31, 2025</div>
+    <h1>90-Day CS<br/>Study Plan</h1>
+    <p>Software Engineering · AI · Big Data · Blockchain<br/>Built for motivated learners who use AI tools smartly.</p>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-card se">
+      <div class="stat-num">SE</div>
+      <div class="stat-label">Software Eng.</div>
+    </div>
+    <div class="stat-card ai">
+      <div class="stat-num">AI</div>
+      <div class="stat-label">Intro to AI</div>
+    </div>
+    <div class="stat-card bd">
+      <div class="stat-num">BD</div>
+      <div class="stat-label">Big Data</div>
+    </div>
+    <div class="stat-card bc">
+      <div class="stat-num">BC</div>
+      <div class="stat-label">Blockchain</div>
+    </div>
+  </div>
+
+  <!-- DAILY RHYTHM -->
+  <div class="daily-section">
+    <div class="section-title">Daily Study Rhythm</div>
+    <div class="rhythm-grid">
+      <div class="rhythm-item">
+        <div class="rhythm-time">08:00 – 09:30</div>
+        <div class="rhythm-label">🧠 Deep Study</div>
+        <div class="rhythm-sub">New concepts, videos, reading — most important block</div>
+      </div>
+      <div class="rhythm-item">
+        <div class="rhythm-time">10:00 – 11:30</div>
+        <div class="rhythm-label">💻 Practice</div>
+        <div class="rhythm-sub">Code exercises, implement what you learned. Use AI as tutor.</div>
+      </div>
+      <div class="rhythm-item">
+        <div class="rhythm-time">14:00 – 15:00</div>
+        <div class="rhythm-label">📝 Review</div>
+        <div class="rhythm-sub">Flashcards, notes, quiz yourself on yesterday's topic</div>
+      </div>
+      <div class="rhythm-item">
+        <div class="rhythm-time">19:00 – 20:00</div>
+        <div class="rhythm-label">🛠 Mini Project</div>
+        <div class="rhythm-sub">Every Friday: build one small thing that combines the week's skills</div>
+      </div>
+      <div class="rhythm-item">
+        <div class="rhythm-time">Every Sunday</div>
+        <div class="rhythm-label">🔁 Reflection</div>
+        <div class="rhythm-sub">Write 5 things learned. Plan next week. Fix gaps with AI help.</div>
+      </div>
+      <div class="rhythm-item">
+        <div class="rhythm-time">Daily</div>
+        <div class="rhythm-label">🤖 AI Habit</div>
+        <div class="rhythm-sub">Use ChatGPT/Claude to explain confusing topics back to you in 3 ways</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-section">
+    <div class="section-title">Your Progress</div>
+    <div class="progress-bars" id="progressBars">
+      <div class="prog-item">
+        <div class="prog-header"><span class="prog-name">Software Engineering</span><span class="prog-pct" id="pct-se">0%</span></div>
+        <div class="prog-bar"><div class="prog-fill se" id="bar-se"></div></div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-header"><span class="prog-name">Intro to AI</span><span class="prog-pct" id="pct-ai">0%</span></div>
+        <div class="prog-bar"><div class="prog-fill ai" id="bar-ai"></div></div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-header"><span class="prog-name">Big Data</span><span class="prog-pct" id="pct-bd">0%</span></div>
+        <div class="prog-bar"><div class="prog-fill bd" id="bar-bd"></div></div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-header"><span class="prog-name">Blockchain</span><span class="prog-pct" id="pct-bc">0%</span></div>
+        <div class="prog-bar"><div class="prog-fill bc" id="bar-bc"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER TABS -->
+  <div class="tabs">
+    <button class="tab active-all" onclick="filterTasks('all')">All Subjects</button>
+    <button class="tab" onclick="filterTasks('se')">🔧 Software Eng.</button>
+    <button class="tab" onclick="filterTasks('ai')">🤖 AI</button>
+    <button class="tab" onclick="filterTasks('bd')">📊 Big Data</button>
+    <button class="tab" onclick="filterTasks('bc')">⛓ Blockchain</button>
+  </div>
+
+  <!-- PLAN CONTENT -->
+  <div id="planContent"></div>
+
+</div>
+
+<script>
+const plan = [
+  {
+    month: 1,
+    label: "March — Foundations",
+    weeks: [
+      {
+        week: 1,
+        dates: "Mar 1–7",
+        subject: "se",
+        title: "Dev Environment & Git",
+        tasks: [
+          "Install VS Code, Python, Git. Learn terminal basics.",
+          "Learn Git: init, add, commit, push, pull, branch.",
+          "Create a GitHub account and push your first repo.",
+          "Understand file structure: modules, packages, imports.",
+          "Daily Python review: functions, loops, conditionals.",
+          "Build: a CLI to-do list app using Python.",
+          "Sunday: Reflect + write 5 things learned about dev setup."
+        ],
+        tools: ["Git", "VS Code", "GitHub", "Python"]
+      },
+      {
+        week: 2,
+        dates: "Mar 8–14",
+        subject: "ai",
+        title: "What is AI? Core Concepts",
+        tasks: [
+          "Watch: 3Blue1Brown 'Neural Networks' intro (YouTube).",
+          "Learn: supervised vs unsupervised vs reinforcement learning.",
+          "Study: what is a model, training data, and predictions.",
+          "Hands-on: run a simple sklearn classifier in Python.",
+          "Read about AI ethics and bias — write a 1-page summary.",
+          "Use ChatGPT to explain concepts back to you in different ways.",
+          "Sunday: Summarize AI types with your own examples."
+        ],
+        tools: ["scikit-learn", "Jupyter Notebook", "ChatGPT"]
+      },
+      {
+        week: 3,
+        dates: "Mar 15–21",
+        subject: "bd",
+        title: "Big Data Fundamentals",
+        tasks: [
+          "Understand the 3 Vs: Volume, Velocity, Variety.",
+          "Learn about structured vs unstructured data with examples.",
+          "Get comfortable with Pandas: load, filter, group CSVs.",
+          "Practice with a real dataset from Kaggle (beginner one).",
+          "Understand what a database is: SQL vs NoSQL overview.",
+          "Build: analyze a public CSV dataset and print 5 insights.",
+          "Sunday: Compare a SQL vs NoSQL use case in your own words."
+        ],
+        tools: ["Pandas", "Jupyter", "Kaggle", "SQLite"]
+      },
+      {
+        week: 4,
+        dates: "Mar 22–31",
+        subject: "bc",
+        title: "Blockchain Basics",
+        tasks: [
+          "Learn what a blockchain is: blocks, chains, hashing.",
+          "Understand distributed ledger vs centralized database.",
+          "Watch: 'But how does Bitcoin actually work?' (3B1B, YouTube).",
+          "Understand consensus mechanisms: PoW vs PoS simply.",
+          "Read about real-world blockchain use cases (supply chain, health).",
+          "Build: simulate a simple blockchain with Python dicts.",
+          "Sunday: Draw a diagram of how a transaction gets confirmed."
+        ],
+        tools: ["Python", "hashlib", "YouTube"]
+      }
+    ]
+  },
+  {
+    month: 2,
+    label: "April — Building Skills",
+    weeks: [
+      {
+        week: 5,
+        dates: "Apr 1–7",
+        subject: "se",
+        title: "OOP & Clean Code",
+        tasks: [
+          "Master Python OOP: classes, inheritance, encapsulation.",
+          "Learn SOLID principles — pick 2 and apply them.",
+          "Study code smells and refactoring patterns.",
+          "Practice: refactor your week 1 CLI app using OOP.",
+          "Write unit tests with pytest for your app.",
+          "Read Clean Code Ch.1–3 or summary.",
+          "Sunday: PR your refactored code and review it yourself."
+        ],
+        tools: ["Python", "pytest", "GitHub"]
+      },
+      {
+        week: 6,
+        dates: "Apr 8–14",
+        subject: "ai",
+        title: "Machine Learning in Practice",
+        tasks: [
+          "Learn linear regression and logistic regression from scratch.",
+          "Train/test split, cross-validation, overfitting explained.",
+          "Hands-on: predict housing prices with sklearn + Pandas.",
+          "Learn how to evaluate models: accuracy, precision, recall.",
+          "Understand feature engineering basics.",
+          "Build: a simple ML pipeline on a Kaggle dataset.",
+          "Sunday: explain your model's performance in plain English."
+        ],
+        tools: ["scikit-learn", "Pandas", "matplotlib", "Kaggle"]
+      },
+      {
+        week: 7,
+        dates: "Apr 15–21",
+        subject: "bd",
+        title: "Data Pipelines & SQL",
+        tasks: [
+          "Learn SQL: SELECT, WHERE, JOIN, GROUP BY, ORDER BY.",
+          "Practice on SQLite or Mode Analytics free tier.",
+          "Understand what ETL means (Extract, Transform, Load).",
+          "Learn about data warehouses vs data lakes.",
+          "Overview of Apache Spark (conceptual, no need to code yet).",
+          "Build: SQL queries on a sample e-commerce database.",
+          "Sunday: map out a data pipeline diagram for a fake company."
+        ],
+        tools: ["SQL", "SQLite", "DB Browser", "Pandas"]
+      },
+      {
+        week: 8,
+        dates: "Apr 22–30",
+        subject: "bc",
+        title: "Smart Contracts & Ethereum",
+        tasks: [
+          "Understand what Ethereum is vs Bitcoin.",
+          "Learn what a smart contract is — use analogies.",
+          "Read a simple Solidity contract (no need to write one yet).",
+          "Understand gas fees, wallets, and addresses.",
+          "Explore a real dApp on Etherscan: trace a transaction.",
+          "Read about DeFi and NFTs briefly — what problem do they solve?",
+          "Sunday: Explain smart contracts to a 10-year-old in writing."
+        ],
+        tools: ["Etherscan", "Remix IDE (browser)", "YouTube"]
+      }
+    ]
+  },
+  {
+    month: 3,
+    label: "May — Integrate & Build",
+    weeks: [
+      {
+        week: 9,
+        dates: "May 1–9",
+        subject: "se",
+        title: "APIs, Web & Flask",
+        tasks: [
+          "Understand what REST APIs are: endpoints, HTTP methods.",
+          "Build a simple Flask API with GET and POST routes.",
+          "Learn how to call external APIs in Python using requests.",
+          "Understand JSON data format thoroughly.",
+          "Add basic error handling to your Flask app.",
+          "Deploy your Flask app locally, then to Vercel/Render.",
+          "Sunday: document your API with a simple README."
+        ],
+        tools: ["Flask", "Python", "Postman", "Vercel", "requests"]
+      },
+      {
+        week: 10,
+        dates: "May 10–16",
+        subject: "ai",
+        title: "Deep Learning & LLMs",
+        tasks: [
+          "Understand neural networks: layers, weights, activation.",
+          "Learn what a transformer model is conceptually.",
+          "Try fine-tuning a tiny model using HuggingFace.",
+          "Explore the OpenAI / Claude API — make your first call.",
+          "Build: a mini AI-powered text classifier using an API.",
+          "Learn prompt engineering basics: zero-shot, few-shot.",
+          "Sunday: compare your AI app with a 'dumb' rule-based version."
+        ],
+        tools: ["HuggingFace", "OpenAI API", "Python", "Colab"]
+      },
+      {
+        week: 11,
+        dates: "May 17–23",
+        subject: "bd",
+        title: "Visualization & Cloud Data",
+        tasks: [
+          "Learn matplotlib and seaborn for charts in Python.",
+          "Build a dashboard in a Jupyter notebook with 5+ charts.",
+          "Overview of cloud data tools: BigQuery, Snowflake (read only).",
+          "Learn what streaming data is: Kafka overview (conceptual).",
+          "Practice: visualize your week 3 dataset with advanced charts.",
+          "Understand data governance and data quality basics.",
+          "Sunday: present your dashboard to yourself as if to a client."
+        ],
+        tools: ["matplotlib", "seaborn", "Jupyter", "Pandas"]
+      },
+      {
+        week: 12,
+        dates: "May 24–31",
+        subject: "bc",
+        title: "Final Project: Integrate All 4",
+        tasks: [
+          "Design a capstone mini-project combining 2+ subjects.",
+          "Example: AI model → stores results on-chain → Flask API exposes it.",
+          "Set up GitHub repo with clear README and commit history.",
+          "Write a simple Solidity contract in Remix (basic storage).",
+          "Deploy your Flask + AI project to Vercel or Render.",
+          "Record a 5-min walkthrough of your project (Loom).",
+          "Sunday: Write a 1-page reflection on your 90-day journey."
+        ],
+        tools: ["Flask", "Solidity", "Remix", "GitHub", "Vercel", "Loom"]
+      }
+    ]
+  }
+];
+
+// STATE
+const doneState = {};
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('studyplan_done');
+    if (saved) Object.assign(doneState, JSON.parse(saved));
+  } catch(e) {}
+}
+
+function saveState() {
+  try { localStorage.setItem('studyplan_done', JSON.stringify(doneState)); } catch(e) {}
+}
+
+function toggleTask(weekNum, taskIdx) {
+  const key = `${weekNum}-${taskIdx}`;
+  doneState[key] = !doneState[key];
+  saveState();
+  renderPlan(currentFilter);
+  updateProgress();
+}
+
+let currentFilter = 'all';
+
+function filterTasks(subject) {
+  currentFilter = subject;
+  document.querySelectorAll('.tab').forEach(t => {
+    t.className = 'tab';
+    if (t.textContent.trim().toLowerCase().includes('all') && subject === 'all') t.classList.add('active-all');
+    if (subject !== 'all') {
+      const map = { se: 'Software', ai: 'AI', bd: 'Big', bc: 'Blockchain' };
+      if (t.textContent.includes(map[subject])) t.classList.add(`active-${subject}`);
+    }
+  });
+  renderPlan(subject);
+}
+
+function renderPlan(filter) {
+  const container = document.getElementById('planContent');
+  container.innerHTML = '';
+
+  plan.forEach((month, mi) => {
+    const weeksFiltered = filter === 'all' ? month.weeks : month.weeks.filter(w => w.subject === filter);
+    if (!weeksFiltered.length) return;
+
+    const sec = document.createElement('div');
+    sec.className = 'month-section';
+    sec.style.animationDelay = `${mi * 0.1}s`;
+
+    sec.innerHTML = `
+      <div class="month-header">
+        <div class="month-title">${month.label}</div>
+        <div class="month-badge m${month.month}">${month.month === 1 ? 'Foundation' : month.month === 2 ? 'Building' : 'Integration'}</div>
+      </div>
+      <div class="week-grid" id="grid-${month.month}"></div>
+    `;
+    container.appendChild(sec);
+
+    const grid = sec.querySelector(`#grid-${month.month}`);
+
+    weeksFiltered.forEach(w => {
+      const card = document.createElement('div');
+      card.className = `week-card ${w.subject}`;
+
+      const doneTasks = w.tasks.filter((_, i) => doneState[`${w.week}-${i}`]).length;
+      const total = w.tasks.length;
+
+      card.innerHTML = `
+        <div class="week-card-top">
+          <div>
+            <div class="week-label">Week ${w.week} · ${w.dates}</div>
+            <div class="week-title">${w.title}</div>
+            <div class="tools-row">${w.tools.map(t => `<span class="tool-chip">${t}</span>`).join('')}</div>
+          </div>
+          <span class="week-tag tag-${w.subject}">${w.subject.toUpperCase()}</span>
+        </div>
+        <div class="task-list">
+          ${w.tasks.map((task, i) => {
+            const done = doneState[`${w.week}-${i}`];
+            return `
+              <div class="task-item ${done ? 'done' : ''}" onclick="toggleTask(${w.week}, ${i})">
+                <div class="task-check ${done ? 'done' : ''}"></div>
+                <div class="task-text">${task}</div>
+              </div>`;
+          }).join('')}
+          <div style="font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:1px;">${doneTasks}/${total} completed</div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    if (mi < plan.length - 1) {
+      const div = document.createElement('div');
+      div.className = 'divider';
+      container.appendChild(div);
+    }
+  });
+}
+
+function updateProgress() {
+  const subjects = ['se', 'ai', 'bd', 'bc'];
+  subjects.forEach(sub => {
+    const subWeeks = plan.flatMap(m => m.weeks).filter(w => w.subject === sub);
+    const total = subWeeks.reduce((a, w) => a + w.tasks.length, 0);
+    const done = subWeeks.reduce((a, w) => a + w.tasks.filter((_, i) => doneState[`${w.week}-${i}`]).length, 0);
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    const bar = document.getElementById(`bar-${sub}`);
+    const pctEl = document.getElementById(`pct-${sub}`);
+    if (bar) bar.style.width = pct + '%';
+    if (pctEl) pctEl.textContent = pct + '%';
+  });
+}
+
+// INIT
+loadState();
+renderPlan('all');
+setTimeout(updateProgress, 300);
+</script>
+</body>
+</html>
